@@ -34,7 +34,7 @@
   bottom: 1rem;
   width: 100%;
   height: 12%;
-  background-color: rgb(143, 100, 204);
+  background-color: rgb(162, 39, 211);
 }
 
 .creator {

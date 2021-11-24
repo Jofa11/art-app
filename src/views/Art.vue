@@ -96,25 +96,42 @@ button {
   font-size: 1em;
   font-weight: bold;
   cursor: pointer;
+  font-family: "Finger Paint", cursive;
+  color: rgb(251, 236, 252);
+  text-shadow: 0.1em 0.1em 0.1em rgb(162, 39, 211);
 }
 
 label {
   padding: 1em;
+  font-size: 1.5em;
   font-weight: bold;
+  color: rgb(162, 39, 211);
+}
+
+input {
+  width: 3em;
+  border: 2px solid rgb(162, 39, 211);
 }
 
 #homeBtn {
   background-color: rgb(173, 147, 233);
-  box-shadow: 0.2em 0.2em 0.2em rgb(133, 154, 192);
+  box-shadow: 0.2em 0.2em 0.2em rgb(170, 106, 196);
+  border: none;
 }
 
 #clearBtn {
   background-color: rgb(235, 85, 185);
-  box-shadow: 0.2em 0.2em 0.2em rgb(161, 114, 113);
+  box-shadow: 0.2em 0.2em 0.2em rgb(170, 78, 162);
+  border: none;
 }
 
 .art {
   background-color: rgb(240, 224, 245);
   background-image: url("../assets/art-app-background.webp");
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-bottom: 6%;
+  
 }
 </style>
