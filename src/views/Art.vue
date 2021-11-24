@@ -2,6 +2,7 @@
   <div class="art">
     <router-link to="/"><button id="homeBtn">Home</button></router-link>
     <h1>Creativity Canvas</h1>
+
     <canvas
       v-on:mousedown="startDrawing()"
       v-on:mouseup="stopDrawing()"
@@ -35,13 +36,20 @@ export default {
     };
   },
   mounted() {
-    // Resize canvas
-    this.height = window.innerHeight - this.height;
-    this.width = window.innerWidth - this.width * 0.6;
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
   },
+
   methods: {
     startDrawing() {
       this.drawing = true;
+    },
+    handleResize() {
+      this.height = window.innerHeight - this.height;
+      this.width = window.innerWidth - this.width * 0.6;
+      this.$nextTick(() => {
+        this.draw();
+      });
     },
     stopDrawing() {
       const canvas = document.getElementById("theCanvas");
@@ -57,6 +65,8 @@ export default {
         ctx.lineWidth = this.lineWidth;
         ctx.lineCap = "round";
         ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+        ctx.lineWidth = this.lineWidth;
+        ctx.strokeStyle = this.strokeStyle;
         ctx.stroke();
       }
     },
@@ -77,6 +87,9 @@ export default {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
       }
     },
+  },
+  beforeUnmount() {
+    window.removeEventListener("resize", this.handleResize);
   },
 };
 </script>
@@ -132,6 +145,5 @@ input {
   background-repeat: no-repeat;
   background-size: cover;
   padding-bottom: 6%;
-  
 }
 </style>

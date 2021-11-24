@@ -31,7 +31,7 @@
 .footer {
   color: whitesmoke;
   position: absolute;
-  bottom: 1rem;
+  bottom: 0;
   width: 100%;
   height: 12%;
   background-color: rgb(162, 39, 211);
