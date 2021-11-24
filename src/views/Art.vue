@@ -1,13 +1,16 @@
 <template>
   <div class="art">
     <router-link to="/"><button id="homeBtn">Home</button></router-link>
-    <h1>Art App</h1>
+    <h1>Creativity Canvas</h1>
     <canvas
       v-on:mousedown="startDrawing()"
       v-on:mouseup="stopDrawing()"
       v-on:mousemove="draw($event)"
       id="theCanvas"
+      v-bind:width="width"
+      v-bind:height="height"
     ></canvas>
+
     <div id="toolbar" @change="changeHandler">
       <label for="stroke">Color</label>
       <input id="stroke" name="stroke" type="color" />
@@ -27,30 +30,29 @@ export default {
       drawing: false,
       lineWidth: 5,
       stroke: null,
+      width: 350,
+      height: 450,
     };
   },
-  // mounted() {
-  // //   const canvas = document.getElementById("theCanvas");
-  // //   // const ctx = canvas.getContext("2d");
-
-  // //   // Resize canvas
-  // //   canvas.height = window.innerHeight - canvas.height;
-  // //   canvas.width = window.innerWidth - canvas.width;
-  // },
+  mounted() {
+    // Resize canvas
+    this.height = window.innerHeight - this.height;
+    this.width = window.innerWidth - this.width * 0.6;
+  },
   methods: {
     startDrawing() {
       this.drawing = true;
     },
     stopDrawing() {
-      var canvas = document.getElementById("theCanvas");
-      var ctx = canvas.getContext("2d");
+      const canvas = document.getElementById("theCanvas");
+      const ctx = canvas.getContext("2d");
       this.drawing = false;
       ctx.stroke();
       ctx.beginPath();
     },
     draw(e) {
-      var canvas = document.getElementById("theCanvas");
-      var ctx = canvas.getContext("2d");
+      const canvas = document.getElementById("theCanvas");
+      const ctx = canvas.getContext("2d");
       if (this.drawing) {
         ctx.lineWidth = this.lineWidth;
         ctx.lineCap = "round";
@@ -58,61 +60,14 @@ export default {
         ctx.stroke();
       }
     },
-    // isDrawing(e) {
-    //   this.drawing = true;
-    //   this.startX = e.clientX;
-    //   console.log(e.clientX);
-    //   this.startY = e.clientY;
-    //   console.log(e.clientY);
-    //   // this.draw();
-    // },
-    // notDrawing() {
-    //   const { vueCanvas } = this.$refs;
-    //   const ctx = vueCanvas.getContext("2d");
-    //   this.drawing = false;
-    //   ctx.stroke();
-    //   ctx.beginPath();
-    // },
-    // draw(e) {
-    //   // if (e.buttons !== 1) {
-    //   //   return;
-    //   // }
-    //   const { vueCanvas } = this.$refs;
-    //   const ctx = vueCanvas.getContext("2d");
-    //   this.offsetX = vueCanvas.offsetLeft;
-    //   this.offsetY = vueCanvas.offsetTop;
-    //   // const { pos } = this;
-    //   // if (!this.drawing) {
-    //   //   console.log("Not drawing");
-    //   //   return;
-    //   // }
-    //   ctx.beginPath();
-    //   ctx.lineWidth = this.lineWidth;
-    //   ctx.lineCap = "round";
-    //   ctx.moveTo(e.startX, e.startY);
-    //   // ctx.moveTo(pos.x, pos.y);
-    //   // this.setPosition(e);
-    //   ctx.lineTo(e.clientX - this.offsetX, e.clientY);
-    //   // ctx.lineTo(pos.x, pos.y);
-    //   ctx.stroke();
-    // },
-    // resize() {
-    //   const { vueCanvas } = this.$refs;
-    //   const ctx = vueCanvas.getContext("2d");
-    //   ctx.canvas.width = window.innerWidth;
-    //   ctx.canvas.height = window.innerHeight;
-    //   console.log("Resizing");
-    // },
     changeHandler(e) {
       var canvas = document.getElementById("theCanvas");
       var ctx = canvas.getContext("2d");
       if (e.target.id === "stroke") {
         ctx.strokeStyle = e.target.value;
-        console.log(ctx.strokeStyle);
       }
       if (e.target.id === "lineWidth") {
         this.lineWidth = e.target.value;
-        console.log(this.lineWidth);
       }
     },
     clearCanvas(e) {
@@ -128,17 +83,14 @@ export default {
 
 <style scoped>
 #theCanvas {
-  width: 350px;
-  height: 450px;
-  border: 12px solid black;
-}
-
-h1 {
-  font-size: 3em;
+  border: 15px solid rgb(162, 39, 211);
+  background-color: whitesmoke;
+  margin-bottom: 1em;
+  cursor: url("../assets/paint-brush.png"), auto;
 }
 
 button {
-  margin: 1em;
+  margin: 1em 1em 0 1em;
   padding: 0.5em 1em;
   border-radius: 5px;
   font-size: 1em;
@@ -146,13 +98,23 @@ button {
   cursor: pointer;
 }
 
+label {
+  padding: 1em;
+  font-weight: bold;
+}
+
 #homeBtn {
-  background-color: rgb(103, 158, 241);
+  background-color: rgb(173, 147, 233);
   box-shadow: 0.2em 0.2em 0.2em rgb(133, 154, 192);
 }
 
 #clearBtn {
-  background-color: rgb(247, 79, 60);
+  background-color: rgb(235, 85, 185);
   box-shadow: 0.2em 0.2em 0.2em rgb(161, 114, 113);
+}
+
+.art {
+  background-color: rgb(240, 224, 245);
+  background-image: url("../assets/art-app-background.webp");
 }
 </style>
