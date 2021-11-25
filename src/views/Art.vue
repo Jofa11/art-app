@@ -5,8 +5,11 @@
 
     <canvas
       v-on:mousedown="startDrawing()"
+      v-on:touchstart="startDrawing()"
       v-on:mouseup="stopDrawing()"
+      v-on:touchend="stopDrawing()"
       v-on:mousemove="draw($event)"
+      v-on:touchmove="draw($event)"
       id="theCanvas"
       v-bind:width="width"
       v-bind:height="height"
@@ -61,6 +64,14 @@ export default {
     draw(e) {
       const canvas = document.getElementById("theCanvas");
       const ctx = canvas.getContext("2d");
+
+      if (this.drawing && e.type === "touchmove") {
+        ctx.lineTo(
+          e.touches[0].clientX - canvas.offsetLeft,
+          e.touches[0].clientY - canvas.offsetTop
+        );
+      }
+
       if (this.drawing) {
         ctx.lineWidth = this.lineWidth;
         ctx.lineCap = "round";
